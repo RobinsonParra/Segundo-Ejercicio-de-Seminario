@@ -196,4 +196,92 @@ public class AdministradorEmpleados {
             System.out.println();
         }
     }
+    
+    public void mostrarEmpleadoMayorSalario(){
+        System.out.println();
+        System.out.println("Mostrar empleado con mayor salario");
+        System.out.println();
+        
+        if (empleados.isEmpty()){
+            System.out.println("No se han registrado Empleados");
+            System.out.println();
+        }
+        else {
+            Empleado empleadoMayorSalario;
+            empleadoMayorSalario = empleados.stream().max((e1, e2) -> e1.getSalario() - e2.getSalario()).get();
+            System.out.println(empleadoMayorSalario);
+            System.out.println();
+        }
+    }
+    
+    public void mostrarEmpleadoMenorSalario(){
+        System.out.println();
+        System.out.println("Mostrar empleado con menor salario");
+        System.out.println();
+        
+        if (empleados.isEmpty()){
+            System.out.println("No se han registrado Empleados");
+            System.out.println();
+        }
+        else {
+            Empleado empleadoMenorSalario;
+            empleadoMenorSalario = empleados.stream().min((e1, e2) -> e1.getSalario() - e2.getSalario()).get();
+            System.out.println(empleadoMenorSalario);
+            System.out.println();
+        }
+    }
+    
+    public void mostrarEmpleadosPorNombre(){
+        System.out.println();
+        System.out.println("Mostrar empleados en orden alfabetico");
+        System.out.println();
+        
+        if (empleados.isEmpty()){
+            System.out.println("No se han registrado Empleados");
+            System.out.println();
+        }
+        else {
+            empleados.stream().sorted((e1, e2) -> e1.getNombre().compareTo(e2.getNombre()))
+                    .forEach(e -> System.out.println(e));
+            System.out.println();
+        }
+    }
+    
+    public void mostrarSumaSalariosMayoresA(int salarioLimiteInf){
+        int suma = empleados.stream()
+                .filter(e -> e.getSalario() > salarioLimiteInf)
+                .map(e -> e.getSalario())
+                .reduce((sum, s) -> sum + s)
+                .get();
+        System.out.println();
+        System.out.println("La suma de los salarios mayores a " + salarioLimiteInf + " es " + suma);
+        System.out.println();
+    }
+    
+    public void contarEmpleadosConApellidoPor(String inicialApellido){
+        long conteo = empleados.stream()
+                .filter(e -> e.getApellido().toUpperCase().startsWith(inicialApellido.toUpperCase()))
+                .count();
+        
+        System.out.println();
+        System.out.println("El número de empleados cuyo apellido empieza por " + inicialApellido + " es " + conteo);
+        System.out.println();
+    }
+    
+    public void mostrarEmpleadosConMayorSalario(long maxEmpleados){
+        System.out.println();
+        System.out.println("Mostrar los " + maxEmpleados + " empleados con mayor salario");
+        System.out.println();
+        
+        if (empleados.isEmpty()){
+            System.out.println("No se han registrado Empleados");
+            System.out.println();
+        }
+        else {
+            empleados.stream().sorted((e1, e2) -> e2.getSalario() - e1.getSalario())
+                    .limit(maxEmpleados)
+                    .forEach(e -> System.out.println(e));
+            System.out.println();
+        }
+    }
 }
